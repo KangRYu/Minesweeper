@@ -4,7 +4,7 @@ private final int NUM_ROWS = 5;
 private final int NUM_COLS = 5;
 
 private MSButton[][] buttons; //2d array of minesweeper buttons
-private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
+private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 
 
 void setup () {
@@ -97,9 +97,9 @@ public class MSButton {
         // else if( clicked && mines.contains(this) ) 
         //     fill(255,0,0);
         else if(clicked)
-            fill( 200 );
+            fill(200);
         else 
-            fill( 100 );
+            fill(100);
 
         rect(x, y, width, height);
         fill(0);
