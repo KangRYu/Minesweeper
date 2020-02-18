@@ -65,8 +65,13 @@ public void displayWinningMessage() {
 
 
 public boolean isValid(int r, int c) {
-    //your code here
-    return false;
+    if(r < 0 || c < 0) {
+        return false;
+    }
+    if(r >= NUM_ROWS || c >= NUM_COLS) {
+        return false;
+    }
+    return true;
 }
 
 
