@@ -6,15 +6,15 @@ private final int NUM_COLS = 5;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 
-void setup ()
-{
+
+void setup () {
     size(400, 400);
     textAlign(CENTER,CENTER);
     
-    // make the manager
+    // Make the manager
     Interactive.make(this);
     
-    // your code to initialize buttons goes here
+    // Creates an empty grid of buttons
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
     for(int r = 0; r < buttons.length; r++) {
         for(int c = 0; c < buttons[r].length; c++) {
@@ -24,50 +24,56 @@ void setup ()
     
     setMines();
 }
-public void setMines()
-{
+
+
+public void setMines() {
     //your code
 }
 
-public void draw ()
-{
+
+public void draw () {
     background( 0 );
     if(isWon() == true)
         displayWinningMessage();
 }
-public boolean isWon()
-{
+
+
+public boolean isWon() {
     //your code here
     return false;
 }
-public void displayLosingMessage()
-{
+
+
+public void displayLosingMessage() {
     //your code here
 }
-public void displayWinningMessage()
-{
+
+
+public void displayWinningMessage() {
     //your code here
 }
-public boolean isValid(int r, int c)
-{
+
+
+public boolean isValid(int r, int c) {
     //your code here
     return false;
 }
-public int countMines(int row, int col)
-{
+
+
+public int countMines(int row, int col) {
     int numMines = 0;
     //your code here
     return numMines;
 }
-public class MSButton
-{
+
+
+public class MSButton {
     private int myRow, myCol;
     private float x,y, width, height;
     private boolean clicked, flagged;
     private String myLabel;
     
-    public MSButton ( int row, int col )
-    {
+    public MSButton (int row, int col) {
         width = 400/NUM_COLS;
         height = 400/NUM_ROWS;
         myRow = row;
@@ -80,13 +86,12 @@ public class MSButton
     }
 
     // called by manager
-    public void mousePressed () 
-    {
+    public void mousePressed () {
         clicked = true;
         //your code here
     }
-    public void draw () 
-    {    
+
+    public void draw () {    
         if (flagged)
             fill(0);
         // else if( clicked && mines.contains(this) ) 
@@ -100,16 +105,16 @@ public class MSButton
         fill(0);
         text(myLabel,x+width/2,y+height/2);
     }
-    public void setLabel(String newLabel)
-    {
+
+    public void setLabel(String newLabel) {
         myLabel = newLabel;
     }
-    public void setLabel(int newLabel)
-    {
+
+    public void setLabel(int newLabel) {
         myLabel = ""+ newLabel;
     }
-    public boolean isFlagged()
-    {
+
+    public boolean isFlagged() {
         return flagged;
     }
 }
