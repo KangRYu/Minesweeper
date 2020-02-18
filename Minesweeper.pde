@@ -21,13 +21,23 @@ void setup () {
             buttons[r][c] = new MSButton(r, c);
         }
     }
+
+    // Initializes mines array list
+    mines = new ArrayList<MSButton>();
     
     setMines();
 }
 
 
 public void setMines() {
-    //your code
+    int r = (int)(Math.random() * NUM_ROWS);
+    int c = (int)(Math.random() * NUM_COLS);
+    MSButton target = buttons[r][c];
+    println(mines);
+
+    if(!mines.contains(target)) {
+        mines.add(target);
+    }
 }
 
 
@@ -94,8 +104,8 @@ public class MSButton {
     public void draw () {    
         if (flagged)
             fill(0);
-        // else if( clicked && mines.contains(this) ) 
-        //     fill(255,0,0);
+        else if(clicked && mines.contains(this)) 
+            fill(255,0,0);
         else if(clicked)
             fill(200);
         else 
