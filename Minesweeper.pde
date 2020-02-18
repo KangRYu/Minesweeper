@@ -12,11 +12,15 @@ void setup ()
     textAlign(CENTER,CENTER);
     
     // make the manager
-    Interactive.make( this );
+    Interactive.make(this);
     
-    //your code to initialize buttons goes here
-    
-    
+    // your code to initialize buttons goes here
+    buttons = new MSButton[NUM_ROWS][NUM_COLS];
+    for(int r = 0; r < buttons.length; r++) {
+        for(int c = 0; c < buttons[r].length; c++) {
+            buttons[r][c] = new MSButton(r, c);
+        }
+    }
     
     setMines();
 }
