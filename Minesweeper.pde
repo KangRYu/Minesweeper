@@ -54,7 +54,7 @@ public boolean isWon() {
 
 
 public void displayLosingMessage() {
-    //your code here
+    text("YOU ARE A LOSER", width/2, height/2);
 }
 
 
