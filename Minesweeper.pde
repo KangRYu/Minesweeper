@@ -111,7 +111,7 @@ public class MSButton {
     }
 
     // called by manager
-    public void mousePressed () {
+    public void mousePressed() {
         clicked = true;
         //your code here
     }
