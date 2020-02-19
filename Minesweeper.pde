@@ -113,7 +113,31 @@ public class MSButton {
     // called by manager
     public void mousePressed() {
         clicked = true;
-        //your code here
+        if(mouseButton == RIGHT) {
+            flagged = !flagged;
+            if(flagged == false) {
+                clicked = false;
+            }
+        }
+        else if(mines.contains(this)) {
+            displayLosingMessage();
+        }
+        else if(countMines(myRow, myCol) > 0) {
+            myLabel = Integer.toString(countMines(myRow, myCol));
+        }
+        else {
+            for(int r = -1; r <= 1; r++) {
+                for(int c = -1; c <= 1; c++) {
+                    if(!(r == 0 && c == 0)) {
+                        if(isValid(myRow + r, myCol + c)) {
+                            if(!buttons[myRow + r][myCol + c].isClicked()) {
+                                  buttons[myRow + r][myCol + c].mousePressed();
+                            }
+                        }     
+                    }
+                }
+            }
+        }
     }
 
     public void draw () {    
@@ -141,5 +165,8 @@ public class MSButton {
 
     public boolean isFlagged() {
         return flagged;
+    }
+    public boolean isClicked() {
+        return clicked;
     }
 }
