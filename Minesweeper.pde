@@ -33,7 +33,6 @@ public void setMines() {
     int r = (int)(Math.random() * NUM_ROWS);
     int c = (int)(Math.random() * NUM_COLS);
     MSButton target = buttons[r][c];
-    println(mines);
 
     if(!mines.contains(target)) {
         mines.add(target);
