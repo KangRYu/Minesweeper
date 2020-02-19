@@ -77,7 +77,17 @@ public boolean isValid(int r, int c) {
 
 public int countMines(int row, int col) {
     int numMines = 0;
-    //your code here
+    for(int r = -1; r <= 1; r++) {
+        for(int c = -1; c <= 1; c++) {
+            if(!(r == 0 && c == 0)) {
+                if(isValid(row + r, col + c)) {
+                    if(mines.contains(buttons[row + r][col + c])) {
+                        numMines++;
+                    }    
+                }     
+            }
+        }
+    }
     return numMines;
 }
 
