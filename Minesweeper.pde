@@ -1,15 +1,22 @@
 import de.bezier.guido.*;
 // CONSTANTS
-private final int NUM_ROWS = 5;
-private final int NUM_COLS = 5;
+private final int NUM_ROWS = 16;
+private final int NUM_COLS = 16;
+private final int NUM_MINES = 20;
 
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
+
+// IMAGES
+PImage buttonImage, pressedButtonImage, mineImage;
 
 
 void setup () {
   size(400, 400);
   textAlign(CENTER,CENTER);
+
+  // Initialize images
+  buttonImage = loadImage("button.png");
   
   // Make the manager
   Interactive.make(this);
@@ -30,18 +37,22 @@ void setup () {
 
 
 public void setMines() {
-  int r = (int)(Math.random() * NUM_ROWS);
-  int c = (int)(Math.random() * NUM_COLS);
-  MSButton target = buttons[r][c];
+  int minesCount = 0;
+  while(minesCount < NUM_MINES) {
+    int r = (int)(Math.random() * NUM_ROWS);
+    int c = (int)(Math.random() * NUM_COLS);
+    MSButton target = buttons[r][c];
 
-  if(!mines.contains(target)) {
-    mines.add(target);
+    if(!mines.contains(target)) {
+      mines.add(target);
+      minesCount++;
+    }
   }
 }
 
 
 public void draw () {
-  background( 0 );
+  background(200);
   if(isWon() == true)
     displayWinningMessage();
 }
@@ -54,7 +65,9 @@ public boolean isWon() {
 
 
 public void displayLosingMessage() {
-    text("YOU ARE A LOSER", width/2, height/2);
+  for(MSButton mine : mines) {
+    mine.click();
+  }
   text("YOU ARE A LOSER", width/2, height/2);
 }
 
@@ -99,8 +112,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 400/NUM_COLS;
-    height = 400/NUM_ROWS;
+    width = 400.0/NUM_COLS;
+    height = 400.0/NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
@@ -131,7 +144,7 @@ public class MSButton {
           if(!(r == 0 && c == 0)) {
             if(isValid(myRow + r, myCol + c)) {
               if(!buttons[myRow + r][myCol + c].isClicked()) {
-                  buttons[myRow + r][myCol + c].mousePressed();
+                buttons[myRow + r][myCol + c].mousePressed();
               }
             }   
           }
@@ -141,15 +154,24 @@ public class MSButton {
   }
 
   public void draw () {  
-    if (flagged)
-      fill(0);
-    else if(clicked && mines.contains(this)) 
-      fill(255,0,0);
-    else if(clicked)
+    if (flagged) {
+      fill(20);
+      stroke(0);
+    }
+    else if(clicked && mines.contains(this)) {
+      fill(255, 0, 0);
+      stroke(235, 0, 0);
+    }
+    else if(clicked) {
       fill(200);
-    else 
+      stroke(180);
+    }
+    else {
       fill(100);
-    rect(x, y, width, height, 10);
+      stroke(80);
+    } 
+    //rect(x, y, width, height);
+    image(buttonImage, 0, 0, 100, 100);
     fill(0);
     text(myLabel,x+width/2,y+height/2);
   }
@@ -167,5 +189,11 @@ public class MSButton {
   }
   public boolean isClicked() {
     return clicked;
+  }
+  public void click() { // Clicks the button no matter if it is flagged or not
+    if(flagged) {
+      flagged = false;
+    }
+    clicked = true;
   }
 }
