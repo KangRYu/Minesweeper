@@ -12,11 +12,11 @@ PImage buttonImage, pressedButtonImage, mineImage;
 
 
 void setup () {
-  size(400, 400);
+  size(208, 208);
   textAlign(CENTER,CENTER);
 
   // Initialize images
-  buttonImage = loadImage("button.png");
+  buttonImage = loadImage("https://drive.google.com/uc?export=view&id=1qQHhxcg6CS2q1Ez_7U3V6yJBPaBy-a0v", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -112,8 +112,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 400.0/NUM_COLS;
-    height = 400.0/NUM_ROWS;
+    width = 208.0/NUM_COLS;
+    height = 208.0/NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
@@ -171,7 +171,7 @@ public class MSButton {
       stroke(80);
     } 
     //rect(x, y, width, height);
-    image(buttonImage, 0, 0, 100, 100);
+    image(buttonImage, x, y, width, height);
     fill(0);
     text(myLabel,x+width/2,y+height/2);
   }
