@@ -9,7 +9,7 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 // IMAGES
-PImage buttonImage, pressedButtonImage, mineImage;
+PImage buttonImage, pressedButtonImage, mineImage, redPressedButtonImage;
 
 void settings() {
   size((int)(NUM_ROWS * 26 * scale), (int)(NUM_COLS * 26 * scale));
@@ -21,6 +21,8 @@ void setup () {
   // Initialize images
   buttonImage = loadImage("https://drive.google.com/uc?export=view&id=1qQHhxcg6CS2q1Ez_7U3V6yJBPaBy-a0v", "png");
   pressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1mdblOTE3YiCDGsXWG7J-6VEssSgykUzM", "png");
+  mineImage = loadImage("https://drive.google.com/uc?export=view&id=146PpNwOqit2sgrbD7vPMgIuvrACjQJpX", "png");
+  redPressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1Jxx8agJyssd66sjL5OwEXlhUGSjvJlRH", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -114,6 +116,7 @@ public class MSButton {
   private int myRow, myCol;
   private float x, y, width, height;
   private boolean clicked, flagged;
+  private boolean firstMine = false; // The first mine that is clicked, should be red
   private String myLabel;
   
   public MSButton (int row, int col) {
@@ -169,6 +172,13 @@ public class MSButton {
     else if(clicked && mines.contains(this)) {
       fill(255, 0, 0);
       stroke(235, 0, 0);
+      if(firstMine) {
+        image(redPressedButtonImage, x, y, width, height);
+      }
+      else {
+        image(pressedButtonImage, x, y, width, height);
+      }
+      image(mineImage, x, y, width, height);
     }
     else if(clicked) {
       fill(200);
