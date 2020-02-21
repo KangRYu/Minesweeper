@@ -8,11 +8,11 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 // IMAGES
-PImage buttonImage, pressedButtonImage, mineImage, redPressedButtonImage;
+PImage buttonImage, pressedButtonImage, mineImage, redPressedButtonImage, flagImage;
 
 
 void setup () {
-  size(600, 600);
+  size(585, 585);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -20,6 +20,7 @@ void setup () {
   pressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1mdblOTE3YiCDGsXWG7J-6VEssSgykUzM", "png");
   mineImage = loadImage("https://drive.google.com/uc?export=view&id=146PpNwOqit2sgrbD7vPMgIuvrACjQJpX", "png");
   redPressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1Jxx8agJyssd66sjL5OwEXlhUGSjvJlRH", "png");
+  flagImage = loadImage("https://drive.google.com/uc?export=view&id=1lvfIs11J9i4j-dE8dowdhxAcxs07HOHp", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -117,8 +118,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 600.0 / NUM_COLS;
-    height = 600.0 / NUM_ROWS;
+    width = 585.0 / NUM_COLS;
+    height = 585.0 / NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
@@ -138,22 +139,24 @@ public class MSButton {
           clicked = false;
         }
       }
-      else if(mines.contains(this)) {
-        displayLosingMessage();
-        firstMine = true;
-      }
-      else if(countMines(myRow, myCol) > 0) {
-        myLabel = str(countMines(myRow, myCol));
-      }
-      else {
-        for(int r = -1; r <= 1; r++) {
-          for(int c = -1; c <= 1; c++) {
-            if(!(r == 0 && c == 0)) {
-              if(isValid(myRow + r, myCol + c)) {
-                if(!buttons[myRow + r][myCol + c].isClicked()) {
-                  buttons[myRow + r][myCol + c].mousePressed();
-                }
-              }   
+      else if(!flagged) {
+        if(mines.contains(this)) {
+          displayLosingMessage();
+          firstMine = true;
+        }
+        else if(countMines(myRow, myCol) > 0) {
+          myLabel = str(countMines(myRow, myCol));
+        }
+        else {
+          for(int r = -1; r <= 1; r++) {
+            for(int c = -1; c <= 1; c++) {
+              if(!(r == 0 && c == 0)) {
+                if(isValid(myRow + r, myCol + c)) {
+                  if(!buttons[myRow + r][myCol + c].isClicked()) {
+                    buttons[myRow + r][myCol + c].mousePressed();
+                  }
+                }   
+              }
             }
           }
         }
@@ -165,6 +168,8 @@ public class MSButton {
     if (flagged) {
       fill(20);
       stroke(0);
+      image(buttonImage, x, y, width, height);
+      image(flagImage, x, y, width, height);
     }
     else if(clicked && mines.contains(this)) {
       fill(255, 0, 0);
