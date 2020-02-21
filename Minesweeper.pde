@@ -2,6 +2,7 @@ import de.bezier.guido.*;
 // CONSTANTS
 private final int NUM_ROWS = 16;
 private final int NUM_COLS = 16;
+private final float scale = 2;
 private final int NUM_MINES = 20;
 
 private MSButton[][] buttons; //2d array of minesweeper buttons
@@ -10,13 +11,16 @@ private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons t
 // IMAGES
 PImage buttonImage, pressedButtonImage, mineImage;
 
+void settings() {
+  size((int)(NUM_ROWS * 26 * scale), (int)(NUM_COLS * 26 * scale));
+}
 
 void setup () {
-  size(208, 208);
   textAlign(CENTER,CENTER);
 
   // Initialize images
   buttonImage = loadImage("https://drive.google.com/uc?export=view&id=1qQHhxcg6CS2q1Ez_7U3V6yJBPaBy-a0v", "png");
+  pressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1mdblOTE3YiCDGsXWG7J-6VEssSgykUzM", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -112,8 +116,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 208.0/NUM_COLS;
-    height = 208.0/NUM_ROWS;
+    width = 26 * scale;
+    height = 26 * scale;
     myRow = row;
     myCol = col; 
     x = myCol*width;
@@ -136,7 +140,7 @@ public class MSButton {
       displayLosingMessage();
     }
     else if(countMines(myRow, myCol) > 0) {
-      myLabel = Integer.toString(countMines(myRow, myCol));
+      myLabel = str(countMines(myRow, myCol));
     }
     else {
       for(int r = -1; r <= 1; r++) {
@@ -165,13 +169,14 @@ public class MSButton {
     else if(clicked) {
       fill(200);
       stroke(180);
+      image(pressedButtonImage, x, y, width, height);
     }
     else {
       fill(100);
       stroke(80);
+      image(buttonImage, x, y, width, height);
     } 
     //rect(x, y, width, height);
-    image(buttonImage, x, y, width, height);
     fill(0);
     text(myLabel,x+width/2,y+height/2);
   }
