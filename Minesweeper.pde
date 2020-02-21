@@ -4,10 +4,10 @@ private final int NUM_ROWS = 16;
 private final int NUM_COLS = 16;
 private final float scale = 1; // The scale of all the elements on screen
 private final int NUM_MINES = 20;
-
+// STATES
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
-
+private boolean gameOver = false;
 // IMAGES
 PImage buttonImage, pressedButtonImage, mineImage;
 
@@ -69,6 +69,7 @@ public boolean isWon() {
 
 
 public void displayLosingMessage() {
+  gameOver = true;
   for(MSButton mine : mines) {
     mine.click();
   }
@@ -77,7 +78,7 @@ public void displayLosingMessage() {
 
 
 public void displayWinningMessage() {
-  //your code here
+  gameOver = true;
 }
 
 
@@ -129,28 +130,31 @@ public class MSButton {
 
   // called by manager
   public void mousePressed() {
-    clicked = true;
-    if(mouseButton == RIGHT) {
-      flagged = !flagged;
-      if(flagged == false) {
-        clicked = false;
+    if(!gameOver) {
+      clicked = true;
+      if(mouseButton == RIGHT) {
+        flagged = !flagged;
+        if(flagged == false) {
+          clicked = false;
+        }
       }
-    }
-    else if(mines.contains(this)) {
-      displayLosingMessage();
-    }
-    else if(countMines(myRow, myCol) > 0) {
-      myLabel = str(countMines(myRow, myCol));
-    }
-    else {
-      for(int r = -1; r <= 1; r++) {
-        for(int c = -1; c <= 1; c++) {
-          if(!(r == 0 && c == 0)) {
-            if(isValid(myRow + r, myCol + c)) {
-              if(!buttons[myRow + r][myCol + c].isClicked()) {
-                buttons[myRow + r][myCol + c].mousePressed();
-              }
-            }   
+      else if(mines.contains(this)) {
+        displayLosingMessage();
+        firstMine = true;
+      }
+      else if(countMines(myRow, myCol) > 0) {
+        myLabel = str(countMines(myRow, myCol));
+      }
+      else {
+        for(int r = -1; r <= 1; r++) {
+          for(int c = -1; c <= 1; c++) {
+            if(!(r == 0 && c == 0)) {
+              if(isValid(myRow + r, myCol + c)) {
+                if(!buttons[myRow + r][myCol + c].isClicked()) {
+                  buttons[myRow + r][myCol + c].mousePressed();
+                }
+              }   
+            }
           }
         }
       }
