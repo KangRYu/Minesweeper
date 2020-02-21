@@ -10,11 +10,9 @@ private boolean gameOver = false;
 // IMAGES
 PImage buttonImage, pressedButtonImage, mineImage, redPressedButtonImage;
 
-void settings() {
-  size((int)(NUM_ROWS * 26 * scale), (int)(NUM_COLS * 26 * scale));
-}
 
 void setup () {
+  size(600, 600);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -119,8 +117,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 26 * scale;
-    height = 26 * scale;
+    width = 600.0 / NUM_COLS;
+    height = 600.0 / NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
