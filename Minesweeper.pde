@@ -2,7 +2,7 @@ import de.bezier.guido.*;
 // CONSTANTS
 private final int NUM_ROWS = 16;
 private final int NUM_COLS = 16;
-private final float scale = 2;
+private final float scale = 1; // The scale of all the elements on screen
 private final int NUM_MINES = 20;
 
 private MSButton[][] buttons; //2d array of minesweeper buttons
