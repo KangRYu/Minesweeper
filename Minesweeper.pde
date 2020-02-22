@@ -8,19 +8,39 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 // IMAGES
-PImage buttonImage, pressedButtonImage, mineImage, redPressedButtonImage, flagImage;
+PImage buttonImage,
+       pressedButtonImage,
+       mineImage,
+       redMineImage,
+       flagImage,
+       oneImage,
+       twoImage,
+       threeImage,
+       fourImage,
+       fiveImage,
+       sixImage,
+       sevenImage,
+       eightImage;
 
 
 void setup () {
-  size(585, 585);
+  size(560, 560);
   textAlign(CENTER,CENTER);
 
   // Initialize images
   buttonImage = loadImage("https://drive.google.com/uc?export=view&id=1qQHhxcg6CS2q1Ez_7U3V6yJBPaBy-a0v", "png");
   pressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1mdblOTE3YiCDGsXWG7J-6VEssSgykUzM", "png");
   mineImage = loadImage("https://drive.google.com/uc?export=view&id=146PpNwOqit2sgrbD7vPMgIuvrACjQJpX", "png");
-  redPressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1Jxx8agJyssd66sjL5OwEXlhUGSjvJlRH", "png");
+  redMineImage = loadImage("https://drive.google.com/uc?export=view&id=1NxpTCO0Rzu6NpgkBxA9wfNu6xqK5V7eZ", "png");
   flagImage = loadImage("https://drive.google.com/uc?export=view&id=1lvfIs11J9i4j-dE8dowdhxAcxs07HOHp", "png");
+  oneImage = loadImage("https://drive.google.com/uc?export=view&id=1dnrIIzY2IOfVJepbLwHNAyS0iV9htviL", "png");
+  twoImage = loadImage("https://drive.google.com/uc?export=view&id=1slx93DGW84fpmVRfmTT7z3PCt0Oi7MWI", "png");
+  threeImage = loadImage("https://drive.google.com/uc?export=view&id=1i1m2HMhwqNyrjReR7o8HHlfHPN0Xlvcq", "png");
+  fourImage = loadImage("https://drive.google.com/uc?export=view&id=1oRxC93zlO8BtTqLq6pySjTgO9j9zbg-d", "png");
+  fiveImage = loadImage("https://drive.google.com/uc?export=view&id=17RD74oq232NBPL0ZogMe4bn7kp1kuRIz", "png");
+  sixImage = loadImage("https://drive.google.com/uc?export=view&id=1YbnFlLTx3PNNtS5ugTtG7vuFx1uz6VWi", "png");
+  sevenImage = loadImage("https://drive.google.com/uc?export=view&id=1bcTUtcPAfrHG24_1rnXcvOY3iBD-VA1r", "png");
+  eightImage = loadImage("https://drive.google.com/uc?export=view&id=1mghED4ys8o-NTFLOIU__LaWb-sQuuvc4", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -118,8 +138,8 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 585.0 / NUM_COLS;
-    height = 585.0 / NUM_ROWS;
+    width = 560.0 / NUM_COLS;
+    height = 560.0 / NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
@@ -166,35 +186,48 @@ public class MSButton {
 
   public void draw () {  
     if (flagged) {
-      fill(20);
-      stroke(0);
-      image(buttonImage, x, y, width, height);
       image(flagImage, x, y, width, height);
     }
     else if(clicked && mines.contains(this)) {
-      fill(255, 0, 0);
-      stroke(235, 0, 0);
       if(firstMine) {
-        image(redPressedButtonImage, x, y, width, height);
+        image(redMineImage, x, y, width, height);
+      }
+      else {
+        image(mineImage, x, y, width, height);
+      }
+    }
+    else if(clicked) {
+      if(myLabel == "1") {
+        image(oneImage, x, y, width, height);
+      }
+      else if(myLabel == "2") {
+        image(twoImage, x, y, width, height);
+      }
+      else if(myLabel == "3") {
+        image(threeImage, x, y, width, height);
+      }
+      else if(myLabel == "4") {
+        image(fourImage, x, y, width, height);
+      }
+      else if(myLabel == "5") {
+        image(fiveImage, x, y, width, height);
+      }
+      else if(myLabel == "6") {
+        image(sixImage, x, y, width, height);
+      }
+      else if(myLabel == "7") {
+        image(sevenImage, x, y, width, height);
+      }
+      else if(myLabel == "8") {
+        image(eightImage, x, y, width, height);
       }
       else {
         image(pressedButtonImage, x, y, width, height);
       }
-      image(mineImage, x, y, width, height);
-    }
-    else if(clicked) {
-      fill(200);
-      stroke(180);
-      image(pressedButtonImage, x, y, width, height);
     }
     else {
-      fill(100);
-      stroke(80);
       image(buttonImage, x, y, width, height);
     } 
-    //rect(x, y, width, height);
-    fill(0);
-    text(myLabel,x+width/2,y+height/2);
   }
 
   public void setLabel(String newLabel) {
