@@ -83,7 +83,18 @@ public void draw () {
 
 
 public boolean isWon() {
-  //your code here
+  int clickedButtons = 0; // The number of buttons that are clicked
+  for(MSButton[] list : buttons) { // Iterate over all buttons
+    for(MSButton button : list) {
+      if(button.isClicked()) { // Check if the button is clicked
+        clickedButtons++;
+      }
+    }
+  }
+
+  if(clickedButtons == NUM_ROWS * NUM_COLS - NUM_MINES) { // If the number of clicked buttons is equal to the number of safe buttons
+    return true;
+  }
   return false;
 }
 
@@ -93,12 +104,13 @@ public void displayLosingMessage() {
   for(MSButton mine : mines) {
     mine.click();
   }
-  text("YOU ARE A LOSER", width/2, height/2);
+  println("YOU LOST");
 }
 
 
 public void displayWinningMessage() {
   gameOver = true;
+  println("YOU WON");
 }
 
 
@@ -152,14 +164,11 @@ public class MSButton {
   // called by manager
   public void mousePressed() {
     if(!gameOver) {
-      clicked = true;
       if(mouseButton == RIGHT) {
         flagged = !flagged;
-        if(flagged == false) {
-          clicked = false;
-        }
       }
       else if(!flagged) {
+        clicked = true;
         if(mines.contains(this)) {
           displayLosingMessage();
           firstMine = true;
