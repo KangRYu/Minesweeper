@@ -101,7 +101,7 @@ public boolean isWon() {
 
 public void displayLosingMessage() {
   gameOver = true;
-  for(MSButton mine : mines) {
+  for(MSButton mine : mines) { // Clicks all the mines to show their location
     mine.click();
   }
   println("YOU LOST");
