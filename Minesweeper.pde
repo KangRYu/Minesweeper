@@ -2,7 +2,7 @@ import de.bezier.guido.*;
 // CONSTANTS
 private final int NUM_ROWS = 18;
 private final int NUM_COLS = 18;
-private final int NUM_MINES = 20;
+private final int NUM_MINES = 40;
 // STATES
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
@@ -197,28 +197,28 @@ public class MSButton {
       }
     }
     else if(clicked) {
-      if(myLabel == "1") {
+      if(myLabel.equals("1")) {
         image(oneImage, x, y, width, height);
       }
-      else if(myLabel == "2") {
+      else if(myLabel.equals("2")) {
         image(twoImage, x, y, width, height);
       }
-      else if(myLabel == "3") {
+      else if(myLabel.equals("3")) {
         image(threeImage, x, y, width, height);
       }
-      else if(myLabel == "4") {
+      else if(myLabel.equals("4")) {
         image(fourImage, x, y, width, height);
       }
-      else if(myLabel == "5") {
+      else if(myLabel.equals("5")) {
         image(fiveImage, x, y, width, height);
       }
-      else if(myLabel == "6") {
+      else if(myLabel.equals("6")) {
         image(sixImage, x, y, width, height);
       }
-      else if(myLabel == "7") {
+      else if(myLabel.equals("7")) {
         image(sevenImage, x, y, width, height);
       }
-      else if(myLabel == "8") {
+      else if(myLabel.equals("8")) {
         image(eightImage, x, y, width, height);
       }
       else {
