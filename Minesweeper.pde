@@ -28,19 +28,19 @@ void setup () {
   textAlign(CENTER,CENTER);
 
   // Initialize images
-  buttonImage = loadImage("https://drive.google.com/uc?export=view&id=1qQHhxcg6CS2q1Ez_7U3V6yJBPaBy-a0v", "png");
-  pressedButtonImage = loadImage("https://drive.google.com/uc?export=view&id=1mdblOTE3YiCDGsXWG7J-6VEssSgykUzM", "png");
-  mineImage = loadImage("https://drive.google.com/uc?export=view&id=146PpNwOqit2sgrbD7vPMgIuvrACjQJpX", "png");
-  redMineImage = loadImage("https://drive.google.com/uc?export=view&id=1NxpTCO0Rzu6NpgkBxA9wfNu6xqK5V7eZ", "png");
-  flagImage = loadImage("https://drive.google.com/uc?export=view&id=1lvfIs11J9i4j-dE8dowdhxAcxs07HOHp", "png");
-  oneImage = loadImage("https://drive.google.com/uc?export=view&id=1dnrIIzY2IOfVJepbLwHNAyS0iV9htviL", "png");
-  twoImage = loadImage("https://drive.google.com/uc?export=view&id=1slx93DGW84fpmVRfmTT7z3PCt0Oi7MWI", "png");
-  threeImage = loadImage("https://drive.google.com/uc?export=view&id=1i1m2HMhwqNyrjReR7o8HHlfHPN0Xlvcq", "png");
-  fourImage = loadImage("https://drive.google.com/uc?export=view&id=1oRxC93zlO8BtTqLq6pySjTgO9j9zbg-d", "png");
-  fiveImage = loadImage("https://drive.google.com/uc?export=view&id=17RD74oq232NBPL0ZogMe4bn7kp1kuRIz", "png");
-  sixImage = loadImage("https://drive.google.com/uc?export=view&id=1YbnFlLTx3PNNtS5ugTtG7vuFx1uz6VWi", "png");
-  sevenImage = loadImage("https://drive.google.com/uc?export=view&id=1bcTUtcPAfrHG24_1rnXcvOY3iBD-VA1r", "png");
-  eightImage = loadImage("https://drive.google.com/uc?export=view&id=1mghED4ys8o-NTFLOIU__LaWb-sQuuvc4", "png");
+  buttonImage = loadImage("https://i.imgur.com/oAnzwYa.png", "png");
+  pressedButtonImage = loadImage("https://i.imgur.com/KwqBwhi.png", "png");
+  mineImage = loadImage("https://i.imgur.com/f8MnctS.png", "png");
+  redMineImage = loadImage("https://i.imgur.com/cpN4VHd.png", "png");
+  flagImage = loadImage("https://i.imgur.com/pCiZgwT.png", "png");
+  oneImage = loadImage("https://i.imgur.com/mrByZso.png", "png");
+  twoImage = loadImage("https://i.imgur.com/W3i9xch.png", "png");
+  threeImage = loadImage("https://i.imgur.com/xLgUDre.png", "png");
+  fourImage = loadImage("https://i.imgur.com/hUnTlzz.png", "png");
+  fiveImage = loadImage("https://i.imgur.com/FK3UiU6.png", "png");
+  sixImage = loadImage("https://i.imgur.com/2406BD3.png", "png");
+  sevenImage = loadImage("https://i.imgur.com/qslZ7NS.png", "png");
+  eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
   
   // Make the manager
   Interactive.make(this);
