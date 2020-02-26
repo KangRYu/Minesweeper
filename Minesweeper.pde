@@ -164,7 +164,7 @@ public class MSButton {
   // called by manager
   public void mousePressed() {
     if(!gameOver) {
-      if(mouseButton == RIGHT) {
+      if(mouseButton == RIGHT && !isClicked()) {
         flagged = !flagged;
       }
       else if(!flagged) {
