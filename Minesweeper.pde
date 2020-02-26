@@ -60,6 +60,14 @@ void setup () {
 }
 
 
+public void draw () {
+  background(200);
+  if(isWon() == true)
+    displayWinningMessage();
+  text(str(num_flags), width/2, 50);
+}
+
+
 public void setMines() {
   int minesCount = 0;
   while(minesCount < NUM_MINES) {
@@ -72,13 +80,6 @@ public void setMines() {
       minesCount++;
     }
   }
-}
-
-
-public void draw () {
-  background(200);
-  if(isWon() == true)
-    displayWinningMessage();
 }
 
 
