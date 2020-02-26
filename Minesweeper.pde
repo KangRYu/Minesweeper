@@ -7,6 +7,7 @@ private final int NUM_MINES = 40;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
+private int num_flags = NUM_MINES;
 // IMAGES
 PImage buttonImage,
        pressedButtonImage,
@@ -24,7 +25,7 @@ PImage buttonImage,
 
 
 void setup () {
-  size(560, 560);
+  size(560, 660);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -156,7 +157,7 @@ public class MSButton {
     myRow = row;
     myCol = col; 
     x = myCol*width;
-    y = myRow*height;
+    y = myRow*height + 100;
     myLabel = "";
     flagged = clicked = false;
     Interactive.add(this); // register it with the manager
@@ -166,6 +167,12 @@ public class MSButton {
   public void mousePressed() {
     if(!gameOver) {
       if(mouseButton == RIGHT && !isClicked()) {
+        if(flagged) {
+          num_flags++;
+        }
+        else {
+          num_flags--;
+        }
         flagged = !flagged;
       }
       else if(!flagged) {
