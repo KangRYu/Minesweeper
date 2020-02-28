@@ -8,6 +8,10 @@ private MSButton[][] buttons; // 2d array of minesweeper buttons
 private ArrayList<MSButton> mines; // ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 private int num_flags = NUM_MINES; // The number of flags left to use
+// FIRST BUTTON PRESS STATES
+private boolean firstPress = true;
+private int firstPressRow;
+private int firstPressCol;
 // IMAGES
 PImage buttonImage,
        pressedButtonImage,
@@ -56,8 +60,6 @@ void setup () {
 
   // Initializes mines array list
   mines = new ArrayList<MSButton>();
-  
-  setMines();
 }
 
 
@@ -77,8 +79,10 @@ public void setMines() {
     MSButton target = buttons[r][c];
 
     if(!mines.contains(target)) {
-      mines.add(target);
-      minesCount++;
+      if(!(firstPressRow == r && firstPressCol == c)) {
+        mines.add(target);
+        minesCount++;
+      }
     }
   }
 }
@@ -176,6 +180,12 @@ public class MSButton {
         flagged = !flagged;
       }
       else if(!flagged) {
+        if(firstPress) {
+          firstPressRow = myRow;
+          firstPressCol = myCol;
+          setMines();
+          firstPress = false;
+        }
         clicked = true;
         if(mines.contains(this)) {
           displayLosingMessage();
