@@ -4,10 +4,10 @@ private final int NUM_ROWS = 18;
 private final int NUM_COLS = 18;
 private final int NUM_MINES = 40;
 // STATES
-private MSButton[][] buttons; //2d array of minesweeper buttons
-private ArrayList<MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
+private MSButton[][] buttons; // 2d array of minesweeper buttons
+private ArrayList<MSButton> mines; // ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
-private int num_flags = NUM_MINES;
+private int num_flags = NUM_MINES; // The number of flags left to use
 // IMAGES
 PImage buttonImage,
        pressedButtonImage,
