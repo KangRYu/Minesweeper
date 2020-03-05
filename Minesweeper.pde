@@ -25,11 +25,12 @@ PImage buttonImage,
        fiveImage,
        sixImage,
        sevenImage,
-       eightImage;
+       eightImage,
+       menuPanelImage;
 
 
 void setup () {
-  size(560, 660);
+  size(560, 618);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -46,6 +47,7 @@ void setup () {
   sixImage = loadImage("https://i.imgur.com/2406BD3.png", "png");
   sevenImage = loadImage("https://i.imgur.com/qslZ7NS.png", "png");
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
+  menuPanelImage = loadImage("https://i.imgur.com/HKFiKY8.png", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -174,7 +176,7 @@ public class MSButton {
     myRow = row;
     myCol = col; 
     x = myCol*width;
-    y = myRow*height + 100;
+    y = myRow*height + 58;
     myLabel = "";
     flagged = clicked = false;
     Interactive.add(this); // register it with the manager
