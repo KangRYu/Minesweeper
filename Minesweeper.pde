@@ -64,9 +64,22 @@ void setup () {
 
 
 public void draw () {
-  background(200);
-  if(isWon() == true)
-    displayWinningMessage();
+  image(menuPanelImage, 0, 0);
+  if(!gameOver) { // If the game is still playing
+    if(isWon()) {
+      gameOver = true;
+    }
+    else { // If the player hasn't won yet
+    }
+  }
+  else { // If the game is over
+    if(isWon()) { // If the player has won
+      displayWinningMessage(); 
+    }
+    else {
+      displayLosingMessage();
+    }
+  }
   text(str(num_flags), width/2, 50);
 }
 
