@@ -8,6 +8,7 @@ private MSButton[][] buttons; // 2d array of minesweeper buttons
 private ArrayList<MSButton> mines; // ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 private int num_flags = NUM_MINES; // The number of flags left to use
+private boolean mouseClicked = false;
 // FIRST BUTTON PRESS STATES
 private boolean firstPress = true;
 private int firstPressRow;
@@ -27,7 +28,15 @@ PImage buttonImage,
        sixImage,
        sevenImage,
        eightImage,
-       menuPanelImage;
+       menuPanelImage,
+       smileButtonImage,
+       smilePressedButtonImage,
+       coolButtonImage,
+       coolPressedButtonImage,
+       deadButtonImage,
+       deadPressedButtonImage;
+// BUTTONS
+MenuButton faceButton;
 
 
 void setup () {
@@ -50,6 +59,16 @@ void setup () {
   sevenImage = loadImage("https://i.imgur.com/qslZ7NS.png", "png");
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
   menuPanelImage = loadImage("https://i.imgur.com/Rt3ICkI.png", "png");
+  smileButtonImage = loadImage("https://i.imgur.com/VdjULyx.png", "png");
+  smilePressedButtonImage = loadImage("https://i.imgur.com/odSFfUZ.png", "png");
+  coolButtonImage = loadImage("https://i.imgur.com/2zPKsa1.png", "png");
+  coolPressedButtonImage = loadImage("https://i.imgur.com/vgZJnyv.png", "png");
+  deadButtonImage = loadImage("https://i.imgur.com/sRlmsij.png", "png");
+  deadPressedButtonImage = loadImage("https://i.imgur.com/DdPqA2B.png", "png");
+
+  // Initialize buttons
+  faceButton = new MenuButton(288, 40, 40, 40);
+  faceButton.setImages(smileButtonImage, smilePressedButtonImage);
   
   // Make the manager
   Interactive.make(this);
@@ -67,8 +86,15 @@ void setup () {
 }
 
 
+public void mousePressed() {
+  mouseClicked = true;
+  println(true);
+}
+
+
 public void draw () {
   image(menuPanelImage, 0, 0);
+
   if(!gameOver) { // If the game is still playing
     if(isWon()) {
       gameOver = true;
@@ -83,7 +109,13 @@ public void draw () {
     else {
     }
   }
+
+  faceButton.check();
+  faceButton.show();
+
   text(str(num_flags), width/2, 50);
+  
+  mouseClicked = false;
 }
 
 
@@ -312,5 +344,50 @@ public class MSButton {
 
   public void setWrong() {
     wrong = true;
+  }
+}
+
+public class MenuButton {
+  private float x, y, w, h; // Physical properties
+  private PImage normalImage, pressedImage;
+  private boolean hover; // Physical states
+
+  public MenuButton(float argx, float argy, float argw, float argh) {
+    x = argx;
+    y = argy;
+    w = argw;
+    h = argh;
+  }
+
+  public void setImages(PImage argNormalImage, PImage argPressedImage) {
+    normalImage = argNormalImage;
+    pressedImage = argPressedImage;
+  }
+
+  public boolean check() {
+    if(x - w/2 <= mouseX && mouseX <= x + w/2 && y - h/2 <= mouseY && mouseY <= y + h/2) {
+      hover = true; 
+    }
+    else {
+      hover = false;
+    }
+
+    if(hover) {
+      if(mouseClicked) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void show() {
+    imageMode(CENTER);
+    if(hover) {
+      image(pressedImage, x, y, w, h);
+    }
+    else {
+      image(normalImage, x, y, w, h);
+    }
+    imageMode(CORNER);
   }
 }
