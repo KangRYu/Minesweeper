@@ -95,7 +95,10 @@ public void draw () {
   // Draw menu panel
   image(menuPanelImage, 0, 0);
 
-  faceButton.check();
+  // Update facebutton
+  if(faceButton.check()) {
+    reset();
+  }
   faceButton.show();
 
   text(str(num_flags), width/2, 50);
@@ -138,6 +141,23 @@ public boolean isWon() {
 }
 
 
+public void reset() { // Resets the board
+  firstPress = true;
+  num_flags = NUM_MINES;
+  faceButton.setImages(smileButtonImage, smilePressedButtonImage);
+  // Resets all buttons
+  for(MSButton[] list : buttons) {
+    for(MSButton button : list) {
+      button.reset();
+    }
+  }
+  // Clears all mines
+  mines.clear();
+  // Starts the game
+  gameOver = false;
+}
+
+
 public void displayLosingMessage() {
   gameOver = true; // Ends game
   for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
@@ -152,11 +172,13 @@ public void displayLosingMessage() {
       }
     }
   }
+  faceButton.setImages(deadButtonImage, deadPressedButtonImage); // Change the face button images
 }
 
 
 public void displayWinningMessage() {
   gameOver = true;
+  faceButton.setImages(coolButtonImage, coolPressedButtonImage);
 }
 
 
@@ -330,6 +352,11 @@ public class MSButton {
 
   public void setWrong() {
     wrong = true;
+  }
+
+  public void reset() { // Resets the button
+    clicked = flagged = wrong = firstMine = false;
+    myLabel = "";
   }
 }
 
