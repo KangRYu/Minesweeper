@@ -298,9 +298,11 @@ public class MSButton {
   public boolean isFlagged() {
     return flagged;
   }
+
   public boolean isClicked() {
     return clicked;
   }
+
   public void click() { // Clicks the button no matter if it is flagged or not
     if(flagged) {
       flagged = false;
