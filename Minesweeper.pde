@@ -92,6 +92,7 @@ public void mousePressed() {
 
 
 public void draw () {
+  // Draw menu panel
   image(menuPanelImage, 0, 0);
 
   faceButton.check();
@@ -138,7 +139,7 @@ public boolean isWon() {
 
 
 public void displayLosingMessage() {
-  gameOver = true;
+  gameOver = true; // Ends game
   for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
     if(!mine.isFlagged()) {
       mine.click();
