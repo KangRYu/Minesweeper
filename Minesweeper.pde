@@ -8,6 +8,7 @@ private MSButton[][] buttons; // 2d array of minesweeper buttons
 private ArrayList<MSButton> mines; // ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
 private int num_flags = NUM_MINES; // The number of flags left to use
+private boolean mouseClicked = false;
 // FIRST BUTTON PRESS STATES
 private boolean firstPress = true;
 private int firstPressRow;
@@ -17,6 +18,7 @@ PImage buttonImage,
        pressedButtonImage,
        mineImage,
        redMineImage,
+       incorrectMineImage,
        flagImage,
        oneImage,
        twoImage,
@@ -26,11 +28,19 @@ PImage buttonImage,
        sixImage,
        sevenImage,
        eightImage,
-       menuPanelImage;
+       menuPanelImage,
+       smileButtonImage,
+       smilePressedButtonImage,
+       coolButtonImage,
+       coolPressedButtonImage,
+       deadButtonImage,
+       deadPressedButtonImage;
+// BUTTONS
+MenuButton faceButton;
 
 
 void setup () {
-  size(560, 618);
+  size(576, 656);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -38,6 +48,7 @@ void setup () {
   pressedButtonImage = loadImage("https://i.imgur.com/KwqBwhi.png", "png");
   mineImage = loadImage("https://i.imgur.com/f8MnctS.png", "png");
   redMineImage = loadImage("https://i.imgur.com/cpN4VHd.png", "png");
+  incorrectMineImage = loadImage("https://i.imgur.com/DY5fr5A.png", "png");
   flagImage = loadImage("https://i.imgur.com/pCiZgwT.png", "png");
   oneImage = loadImage("https://i.imgur.com/mrByZso.png", "png");
   twoImage = loadImage("https://i.imgur.com/W3i9xch.png", "png");
@@ -47,7 +58,17 @@ void setup () {
   sixImage = loadImage("https://i.imgur.com/2406BD3.png", "png");
   sevenImage = loadImage("https://i.imgur.com/qslZ7NS.png", "png");
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
-  menuPanelImage = loadImage("https://i.imgur.com/HKFiKY8.png", "png");
+  menuPanelImage = loadImage("https://i.imgur.com/Rt3ICkI.png", "png");
+  smileButtonImage = loadImage("https://i.imgur.com/VdjULyx.png", "png");
+  smilePressedButtonImage = loadImage("https://i.imgur.com/odSFfUZ.png", "png");
+  coolButtonImage = loadImage("https://i.imgur.com/2zPKsa1.png", "png");
+  coolPressedButtonImage = loadImage("https://i.imgur.com/vgZJnyv.png", "png");
+  deadButtonImage = loadImage("https://i.imgur.com/sRlmsij.png", "png");
+  deadPressedButtonImage = loadImage("https://i.imgur.com/DdPqA2B.png", "png");
+
+  // Initialize buttons
+  faceButton = new MenuButton(288, 40, 40, 40);
+  faceButton.setImages(smileButtonImage, smilePressedButtonImage);
   
   // Make the manager
   Interactive.make(this);
@@ -65,8 +86,15 @@ void setup () {
 }
 
 
+public void mousePressed() {
+  mouseClicked = true;
+  println(true);
+}
+
+
 public void draw () {
   image(menuPanelImage, 0, 0);
+
   if(!gameOver) { // If the game is still playing
     if(isWon()) {
       gameOver = true;
@@ -79,10 +107,15 @@ public void draw () {
       displayWinningMessage(); 
     }
     else {
-      displayLosingMessage();
     }
   }
+
+  faceButton.check();
+  faceButton.show();
+
   text(str(num_flags), width/2, 50);
+  
+  mouseClicked = false;
 }
 
 
@@ -122,8 +155,17 @@ public boolean isWon() {
 
 public void displayLosingMessage() {
   gameOver = true;
-  for(MSButton mine : mines) { // Clicks all the mines to show their location
-    mine.click();
+  for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
+    if(!mine.isFlagged()) {
+      mine.click();
+    }
+  }
+  for(MSButton[] list : buttons) { // Sets all flagged non mines off
+    for(MSButton button : list) {
+      if(button.isFlagged() && !mines.contains(button)) {
+        button.setWrong();
+      }
+    }
   }
   println("YOU LOST");
 }
@@ -166,19 +208,19 @@ public int countMines(int row, int col) {
 public class MSButton {
   private int myRow, myCol;
   private float x, y, width, height;
-  private boolean clicked, flagged;
+  private boolean clicked, flagged, wrong; // States
   private boolean firstMine = false; // The first mine that is clicked, should be red
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 560.0 / NUM_COLS;
-    height = 560.0 / NUM_ROWS;
+    width = 576.0 / NUM_COLS;
+    height = 576.0 / NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
-    y = myRow*height + 58;
+    y = myRow*height + 80;
     myLabel = "";
-    flagged = clicked = false;
+    flagged = clicked = wrong = false;
     Interactive.add(this); // register it with the manager
   }
 
@@ -228,7 +270,12 @@ public class MSButton {
 
   public void draw () {  
     if (flagged) {
-      image(flagImage, x, y, width, height);
+      if(wrong) {
+        image(incorrectMineImage, x, y, width, height);
+      }
+      else {
+        image(flagImage, x, y, width, height);
+      }
     }
     else if(clicked && mines.contains(this)) {
       if(firstMine) {
@@ -283,13 +330,64 @@ public class MSButton {
   public boolean isFlagged() {
     return flagged;
   }
+
   public boolean isClicked() {
     return clicked;
   }
+
   public void click() { // Clicks the button no matter if it is flagged or not
     if(flagged) {
       flagged = false;
     }
     clicked = true;
+  }
+
+  public void setWrong() {
+    wrong = true;
+  }
+}
+
+public class MenuButton {
+  private float x, y, w, h; // Physical properties
+  private PImage normalImage, pressedImage;
+  private boolean hover; // Physical states
+
+  public MenuButton(float argx, float argy, float argw, float argh) {
+    x = argx;
+    y = argy;
+    w = argw;
+    h = argh;
+  }
+
+  public void setImages(PImage argNormalImage, PImage argPressedImage) {
+    normalImage = argNormalImage;
+    pressedImage = argPressedImage;
+  }
+
+  public boolean check() {
+    if(x - w/2 <= mouseX && mouseX <= x + w/2 && y - h/2 <= mouseY && mouseY <= y + h/2) {
+      hover = true; 
+    }
+    else {
+      hover = false;
+    }
+
+    if(hover) {
+      if(mouseClicked) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void show() {
+    imageMode(CENTER);
+    if(hover) {
+      image(pressedImage, x, y, w, h);
+    }
+    else {
+      image(normalImage, x, y, w, h);
+    }
+    imageMode(CORNER);
   }
 }
