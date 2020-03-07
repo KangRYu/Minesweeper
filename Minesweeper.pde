@@ -95,21 +95,6 @@ public void mousePressed() {
 public void draw () {
   image(menuPanelImage, 0, 0);
 
-  if(!gameOver) { // If the game is still playing
-    if(isWon()) {
-      gameOver = true;
-    }
-    else { // If the player hasn't won yet
-    }
-  }
-  else { // If the game is over
-    if(isWon()) { // If the player has won
-      displayWinningMessage(); 
-    }
-    else {
-    }
-  }
-
   faceButton.check();
   faceButton.show();
 
@@ -265,6 +250,9 @@ public class MSButton {
           }
         }
       }
+    }
+    if(isWon()) { // Check winning conditions
+      displayWinningMessage();
     }
   }
 
