@@ -60,11 +60,11 @@ void setup () {
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
   menuPanelImage = loadImage("https://i.imgur.com/Rt3ICkI.png", "png");
   smileButtonImage = loadImage("https://i.imgur.com/VdjULyx.png", "png");
-  smilePressedButtonImage = loadImage("https://i.imgur.com/odSFfUZ.png", "png");
+  smilePressedButtonImage = loadImage("https://i.imgur.com/vi9bxvd.png", "png");
   coolButtonImage = loadImage("https://i.imgur.com/2zPKsa1.png", "png");
-  coolPressedButtonImage = loadImage("https://i.imgur.com/vgZJnyv.png", "png");
+  coolPressedButtonImage = loadImage("https://i.imgur.com/TKyoQ00.png", "png");
   deadButtonImage = loadImage("https://i.imgur.com/sRlmsij.png", "png");
-  deadPressedButtonImage = loadImage("https://i.imgur.com/DdPqA2B.png", "png");
+  deadPressedButtonImage = loadImage("https://i.imgur.com/ufoEhXw.png", "png");
 
   // Initialize buttons
   faceButton = new MenuButton(288, 40, 40, 40);
