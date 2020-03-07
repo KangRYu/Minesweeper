@@ -88,7 +88,6 @@ void setup () {
 
 public void mousePressed() {
   mouseClicked = true;
-  println(true);
 }
 
 
@@ -152,13 +151,11 @@ public void displayLosingMessage() {
       }
     }
   }
-  println("YOU LOST");
 }
 
 
 public void displayWinningMessage() {
   gameOver = true;
-  println("YOU WON");
 }
 
 
