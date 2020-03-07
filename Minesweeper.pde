@@ -31,7 +31,7 @@ PImage buttonImage,
 
 
 void setup () {
-  size(560, 618);
+  size(576, 656);
   textAlign(CENTER,CENTER);
 
   // Initialize images
@@ -49,7 +49,7 @@ void setup () {
   sixImage = loadImage("https://i.imgur.com/2406BD3.png", "png");
   sevenImage = loadImage("https://i.imgur.com/qslZ7NS.png", "png");
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
-  menuPanelImage = loadImage("https://i.imgur.com/HKFiKY8.png", "png");
+  menuPanelImage = loadImage("https://i.imgur.com/Rt3ICkI.png", "png");
   
   // Make the manager
   Interactive.make(this);
@@ -181,12 +181,12 @@ public class MSButton {
   private String myLabel;
   
   public MSButton (int row, int col) {
-    width = 560.0 / NUM_COLS;
-    height = 560.0 / NUM_ROWS;
+    width = 576.0 / NUM_COLS;
+    height = 576.0 / NUM_ROWS;
     myRow = row;
     myCol = col; 
     x = myCol*width;
-    y = myRow*height + 58;
+    y = myRow*height + 80;
     myLabel = "";
     flagged = clicked = wrong = false;
     Interactive.add(this); // register it with the manager
