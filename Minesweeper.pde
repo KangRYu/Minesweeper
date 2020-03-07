@@ -17,6 +17,7 @@ PImage buttonImage,
        pressedButtonImage,
        mineImage,
        redMineImage,
+       incorrectMineImage,
        flagImage,
        oneImage,
        twoImage,
@@ -38,6 +39,7 @@ void setup () {
   pressedButtonImage = loadImage("https://i.imgur.com/KwqBwhi.png", "png");
   mineImage = loadImage("https://i.imgur.com/f8MnctS.png", "png");
   redMineImage = loadImage("https://i.imgur.com/cpN4VHd.png", "png");
+  incorrectMineImage = loadImage("https://i.imgur.com/DY5fr5A.png", "png");
   flagImage = loadImage("https://i.imgur.com/pCiZgwT.png", "png");
   oneImage = loadImage("https://i.imgur.com/mrByZso.png", "png");
   twoImage = loadImage("https://i.imgur.com/W3i9xch.png", "png");
@@ -122,8 +124,17 @@ public boolean isWon() {
 
 public void displayLosingMessage() {
   gameOver = true;
-  for(MSButton mine : mines) { // Clicks all the mines to show their location
-    mine.click();
+  for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
+    if(!mine.isFlagged()) {
+      mine.click();
+    }
+  }
+  for(MSButton[] list : buttons) { // Sets all flagged non mines off
+    for(MSButton button : list) {
+      if(button.isFlagged() && !mines.contains(button)) {
+        button.setWrong();
+      }
+    }
   }
   println("YOU LOST");
 }
@@ -166,7 +177,7 @@ public int countMines(int row, int col) {
 public class MSButton {
   private int myRow, myCol;
   private float x, y, width, height;
-  private boolean clicked, flagged;
+  private boolean clicked, flagged, wrong; // States
   private boolean firstMine = false; // The first mine that is clicked, should be red
   private String myLabel;
   
@@ -178,7 +189,7 @@ public class MSButton {
     x = myCol*width;
     y = myRow*height + 58;
     myLabel = "";
-    flagged = clicked = false;
+    flagged = clicked = wrong = false;
     Interactive.add(this); // register it with the manager
   }
 
@@ -228,7 +239,12 @@ public class MSButton {
 
   public void draw () {  
     if (flagged) {
-      image(flagImage, x, y, width, height);
+      if(wrong) {
+        image(incorrectMineImage, x, y, width, height);
+      }
+      else {
+        image(flagImage, x, y, width, height);
+      }
     }
     else if(clicked && mines.contains(this)) {
       if(firstMine) {
@@ -291,5 +307,9 @@ public class MSButton {
       flagged = false;
     }
     clicked = true;
+  }
+
+  public void setWrong() {
+    wrong = true;
   }
 }
