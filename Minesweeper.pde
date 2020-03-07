@@ -81,7 +81,6 @@ public void draw () {
       displayWinningMessage(); 
     }
     else {
-      displayLosingMessage();
     }
   }
   text(str(num_flags), width/2, 50);
