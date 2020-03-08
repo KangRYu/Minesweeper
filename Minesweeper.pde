@@ -60,11 +60,11 @@ void setup () {
   eightImage = loadImage("https://i.imgur.com/KKXo07N.png", "png");
   menuPanelImage = loadImage("https://i.imgur.com/Rt3ICkI.png", "png");
   smileButtonImage = loadImage("https://i.imgur.com/VdjULyx.png", "png");
-  smilePressedButtonImage = loadImage("https://i.imgur.com/odSFfUZ.png", "png");
+  smilePressedButtonImage = loadImage("https://i.imgur.com/vi9bxvd.png", "png");
   coolButtonImage = loadImage("https://i.imgur.com/2zPKsa1.png", "png");
-  coolPressedButtonImage = loadImage("https://i.imgur.com/vgZJnyv.png", "png");
+  coolPressedButtonImage = loadImage("https://i.imgur.com/TKyoQ00.png", "png");
   deadButtonImage = loadImage("https://i.imgur.com/sRlmsij.png", "png");
-  deadPressedButtonImage = loadImage("https://i.imgur.com/DdPqA2B.png", "png");
+  deadPressedButtonImage = loadImage("https://i.imgur.com/ufoEhXw.png", "png");
 
   // Initialize buttons
   faceButton = new MenuButton(288, 40, 40, 40);
@@ -88,29 +88,17 @@ void setup () {
 
 public void mousePressed() {
   mouseClicked = true;
-  println(true);
 }
 
 
 public void draw () {
+  // Draw menu panel
   image(menuPanelImage, 0, 0);
 
-  if(!gameOver) { // If the game is still playing
-    if(isWon()) {
-      gameOver = true;
-    }
-    else { // If the player hasn't won yet
-    }
+  // Update facebutton
+  if(faceButton.check()) {
+    reset();
   }
-  else { // If the game is over
-    if(isWon()) { // If the player has won
-      displayWinningMessage(); 
-    }
-    else {
-    }
-  }
-
-  faceButton.check();
   faceButton.show();
 
   text(str(num_flags), width/2, 50);
@@ -153,8 +141,25 @@ public boolean isWon() {
 }
 
 
+public void reset() { // Resets the board
+  firstPress = true;
+  num_flags = NUM_MINES;
+  faceButton.setImages(smileButtonImage, smilePressedButtonImage);
+  // Resets all buttons
+  for(MSButton[] list : buttons) {
+    for(MSButton button : list) {
+      button.reset();
+    }
+  }
+  // Clears all mines
+  mines.clear();
+  // Starts the game
+  gameOver = false;
+}
+
+
 public void displayLosingMessage() {
-  gameOver = true;
+  gameOver = true; // Ends game
   for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
     if(!mine.isFlagged()) {
       mine.click();
@@ -167,13 +172,13 @@ public void displayLosingMessage() {
       }
     }
   }
-  println("YOU LOST");
+  faceButton.setImages(deadButtonImage, deadPressedButtonImage); // Change the face button images
 }
 
 
 public void displayWinningMessage() {
   gameOver = true;
-  println("YOU WON");
+  faceButton.setImages(coolButtonImage, coolPressedButtonImage);
 }
 
 
@@ -266,6 +271,9 @@ public class MSButton {
         }
       }
     }
+    if(isWon()) { // Check winning conditions
+      displayWinningMessage();
+    }
   }
 
   public void draw () {  
@@ -344,6 +352,11 @@ public class MSButton {
 
   public void setWrong() {
     wrong = true;
+  }
+
+  public void reset() { // Resets the button
+    clicked = flagged = wrong = firstMine = false;
+    myLabel = "";
   }
 }
 
