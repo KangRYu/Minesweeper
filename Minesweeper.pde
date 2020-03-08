@@ -9,6 +9,8 @@ private ArrayList<MSButton> mines; // ArrayList of just the minesweeper buttons 
 private boolean gameOver = false;
 private int num_flags = NUM_MINES; // The number of flags left to use
 private boolean mouseClicked = false;
+private int startTime = 0; // When the game started
+private int endTime = 0; // When the game ended
 // FIRST BUTTON PRESS STATES
 private boolean firstPress = true;
 private int firstPressRow;
@@ -34,7 +36,17 @@ PImage buttonImage,
        coolButtonImage,
        coolPressedButtonImage,
        deadButtonImage,
-       deadPressedButtonImage;
+       deadPressedButtonImage,
+       scoreZeroImage,
+       scoreOneImage,
+       scoreTwoImage,
+       scoreThreeImage,
+       scoreFourImage,
+       scoreFiveImage,
+       scoreSixImage,
+       scoreSevenImage,
+       scoreEightImage,
+       scoreNineImage;
 // BUTTONS
 MenuButton faceButton;
 
@@ -65,6 +77,16 @@ void setup () {
   coolPressedButtonImage = loadImage("https://i.imgur.com/TKyoQ00.png", "png");
   deadButtonImage = loadImage("https://i.imgur.com/sRlmsij.png", "png");
   deadPressedButtonImage = loadImage("https://i.imgur.com/ufoEhXw.png", "png");
+  scoreZeroImage = loadImage("https://i.imgur.com/uqzd9ds.png", "png");
+  scoreOneImage = loadImage("https://i.imgur.com/p9Ihs9J.png", "png");
+  scoreTwoImage = loadImage("https://i.imgur.com/HhNBvaB.png", "png");
+  scoreThreeImage = loadImage("https://i.imgur.com/egFvbaG.png", "png");
+  scoreFourImage = loadImage("https://i.imgur.com/g2hOQvl.png", "png");
+  scoreFiveImage = loadImage("https://i.imgur.com/unXONab.png", "png");
+  scoreSixImage = loadImage("https://i.imgur.com/kovMYqf.png", "png");
+  scoreSevenImage = loadImage("https://i.imgur.com/E27qGsU.png", "png");
+  scoreEightImage = loadImage("https://i.imgur.com/Rg1BK48.png", "png");
+  scoreNineImage = loadImage("https://i.imgur.com/ndftokq.png", "png");
 
   // Initialize buttons
   faceButton = new MenuButton(288, 40, 40, 40);
@@ -101,7 +123,10 @@ public void draw () {
   }
   faceButton.show();
 
-  text(str(num_flags), width/2, 50);
+  // Draw flag counter
+  drawFlagCounter();
+  // Draw time counter
+  drawTimeCounter();
   
   mouseClicked = false;
 }
@@ -153,6 +178,8 @@ public void reset() { // Resets the board
   }
   // Clears all mines
   mines.clear();
+  // Saves current time
+  startTime = millis();
   // Starts the game
   gameOver = false;
 }
@@ -160,6 +187,7 @@ public void reset() { // Resets the board
 
 public void displayLosingMessage() {
   gameOver = true; // Ends game
+  endTime = millis(); // Saves the end time
   for(MSButton mine : mines) { // Clicks all unflagged mines to show their location
     if(!mine.isFlagged()) {
       mine.click();
@@ -207,6 +235,70 @@ public int countMines(int row, int col) {
     }
   }
   return numMines;
+}
+
+
+public void drawFlagCounter() {
+  imageMode(CENTER);
+  image(giveImage(num_flags % 10), 90, 40, 22, 40);
+  image(giveImage((num_flags / 10) % 10), 68, 40, 22, 40);
+  image(giveImage(num_flags / 10 / 10), 46, 40, 22, 40);
+  imageMode(CORNER);
+}
+
+
+public void drawTimeCounter() {
+  int time;
+  // Different time calculations for gameover and not
+  if(!gameOver) {
+    time = (millis() - startTime)/1000;
+  }
+  else {
+    time = (endTime - startTime)/1000;
+  }
+  // Caps time at 999
+  if(time > 999) {
+    time = 999;
+  }
+  imageMode(CENTER);
+  image(giveImage(time % 10), width - 46, 40, 22, 40);
+  image(giveImage((time / 10) % 10), width - 68, 40, 22, 40);
+  image(giveImage(time / 10 / 10), width - 90, 40, 22, 40);
+  imageMode(CORNER);
+}
+
+
+public PImage giveImage(int input) {
+  if(input == 1) {
+    return scoreOneImage;
+  }
+  else if(input == 2) {
+    return scoreTwoImage;
+  }
+  else if(input == 3) {
+    return scoreThreeImage;
+  }
+  else if(input == 4) {
+    return scoreFourImage;
+  }
+  else if(input == 5) {
+    return scoreFiveImage;
+  }
+  else if(input == 6) {
+    return scoreSixImage;
+  }
+  else if(input == 7) {
+    return scoreSevenImage;
+  }
+  else if(input == 8) {
+    return scoreEightImage;
+  }
+  else if(input == 9) {
+    return scoreNineImage;
+  }
+  else {
+    return scoreZeroImage;
+  }
 }
 
 
