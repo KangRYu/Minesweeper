@@ -251,10 +251,10 @@ public void drawTimeCounter() {
   int time;
   // Different time calculations for gameover and not
   if(!gameOver) {
-    time = (millis() - startTime)/1000;
+    time = floor((millis() - startTime)/1000);
   }
   else {
-    time = (endTime - startTime)/1000;
+    time = floor((endTime - startTime)/1000);
   }
   // Caps time at 999
   if(time > 999) {
