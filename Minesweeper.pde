@@ -110,7 +110,7 @@ void setup () {
 
 public void mousePressed() {
   mouseClicked = true;
-  println(num_flags);
+  println(giveImage((num_flags / 10) % 10).equals(scoreThreeImage));
 }
 
 
