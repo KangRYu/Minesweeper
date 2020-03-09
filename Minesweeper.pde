@@ -110,6 +110,7 @@ void setup () {
 
 public void mousePressed() {
   mouseClicked = true;
+  println(num_flags);
 }
 
 
