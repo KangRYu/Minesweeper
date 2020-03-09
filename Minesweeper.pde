@@ -206,6 +206,7 @@ public void displayLosingMessage() {
 
 public void displayWinningMessage() {
   gameOver = true;
+  endTime = millis(); // Saves the end time
   faceButton.setImages(coolButtonImage, coolPressedButtonImage);
 }
 
