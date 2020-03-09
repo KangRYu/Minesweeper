@@ -241,8 +241,8 @@ public int countMines(int row, int col) {
 public void drawFlagCounter() {
   imageMode(CENTER);
   image(giveImage(num_flags % 10), 90, 40, 22, 40);
-  image(giveImage((num_flags / 10) % 10), 68, 40, 22, 40);
-  image(giveImage(num_flags / 10 / 10), 46, 40, 22, 40);
+  image(giveImage((num_flags / 10.0) % 10), 68, 40, 22, 40);
+  image(giveImage(num_flags / 10.0 / 10.0), 46, 40, 22, 40);
   imageMode(CORNER);
 }
 
@@ -251,10 +251,10 @@ public void drawTimeCounter() {
   int time;
   // Different time calculations for gameover and not
   if(!gameOver) {
-    time = (millis() - startTime)/1000;
+    time = (millis() - startTime)/1000.0;
   }
   else {
-    time = (endTime - startTime)/1000;
+    time = (endTime - startTime)/1000.0;
   }
   // Caps time at 999
   if(time > 999) {
@@ -262,8 +262,8 @@ public void drawTimeCounter() {
   }
   imageMode(CENTER);
   image(giveImage(time % 10), width - 46, 40, 22, 40);
-  image(giveImage((time / 10) % 10), width - 68, 40, 22, 40);
-  image(giveImage(time / 10 / 10), width - 90, 40, 22, 40);
+  image(giveImage((time / 10.0) % 10.0), width - 68, 40, 22, 40);
+  image(giveImage(time / 10.0 / 10.0), width - 90, 40, 22, 40);
   imageMode(CORNER);
 }
 
