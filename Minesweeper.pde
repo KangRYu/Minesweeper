@@ -110,8 +110,6 @@ void setup () {
 
 public void mousePressed() {
   mouseClicked = true;
-  print(num_flags/10);
-  println(num_flags%10);
 }
 
 
@@ -243,8 +241,8 @@ public int countMines(int row, int col) {
 public void drawFlagCounter() {
   imageMode(CENTER);
   image(giveImage(num_flags % 10), 90, 40, 22, 40);
-  image(giveImage((num_flags / 10) % 10), 68, 40, 22, 40);
-  image(giveImage(num_flags / 10 / 10), 46, 40, 22, 40);
+  image(giveImage(floor(num_flags / 10) % 10), 68, 40, 22, 40);
+  image(giveImage(floor(floor(num_flags / 10) / 10)), 46, 40, 22, 40);
   imageMode(CORNER);
 }
 
@@ -264,8 +262,8 @@ public void drawTimeCounter() {
   }
   imageMode(CENTER);
   image(giveImage(time % 10), width - 46, 40, 22, 40);
-  image(giveImage((time / 10) % 10), width - 68, 40, 22, 40);
-  image(giveImage(time / 10 / 10), width - 90, 40, 22, 40);
+  image(giveImage(floor(time / 10) % 10), width - 68, 40, 22, 40);
+  image(giveImage(floor(floor(time / 10) / 10)), width - 90, 40, 22, 40);
   imageMode(CORNER);
 }
 
